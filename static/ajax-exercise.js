@@ -17,7 +17,7 @@ $('#get-fortune-button').on('click', (evt) => {
 $('#weather-form').on('submit', (evt) => {
     evt.preventDefault(); // prevent form from submitting
 
-    let formData = {'zipcode' : $('#zipcode-field').val()};
+    const formData = {'zipcode' : $('#zipcode-field').val()};
 
     $.get('/weather.json', formData, (res) => {
         $('#weather-info').html(res.forecast);
@@ -36,5 +36,19 @@ function orderMelons(evt) {
 }
 
 $("#order-form").on('submit', orderMelons);
+
+$('#order-form').on('submit', (evt) => {
+    evt.preventDefault();
+
+    const formData = $('#order-form').serialize();
+
+    $.post('/order-melons.json', formData, (res) => {
+        $('#order-status').html(res.msg);
+        if (res.code === 'ERROR') {
+            $('#order-status').addClass('order-error');
+        };
+        // $('#order-status').addClass(res.code);
+    });
+});
 
 
