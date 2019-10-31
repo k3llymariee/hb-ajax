@@ -3,16 +3,8 @@
 
 // PART 1: SHOW A FORTUNE
 
-function showFortune(evt) {
-
-    // TODO: get the fortune and show it in the #fortune-text div
-}
-
-// $('#get-fortune-button').on('click', showFortune);
-
-
 $('#get-fortune-button').on('click', (evt) => {
-    evt.preventDefault(); //is this needed? just a button
+    // evt.preventDefault(); //is this needed? just a button
 
     $.get('/fortune', (res) => {
         $('#fortune-text').html(res);
@@ -20,23 +12,17 @@ $('#get-fortune-button').on('click', (evt) => {
 });
 
 
-
-
-
 // PART 2: SHOW WEATHER
 
-function showWeather(evt) {
-    evt.preventDefault();
+$('#weather-form').on('submit', (evt) => {
+    evt.preventDefault(); // prevent form from submitting
 
-    let url = "/weather.json";
-    let formData = {"zipcode": $("#zipcode-field").val()};
+    let formData = {'zipcode' : $('#zipcode-field').val()};
 
-
-    // TODO: request weather with that URL and show the forecast in #weather-info
-}
-
-$("#weather-form").on('submit', showWeather);
-
+    $.get('/weather.json', formData, (res) => {
+        $('#weather-info').html(res.forecast);
+    });
+});
 
 
 
